@@ -54,14 +54,14 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	*/
-	/* class    instance      title       	 tags mask    isfloating   isterminal  noswallow  monitor */
-	{ "Gimp",     NULL,       NULL,       	    1 << 8,       0,           0,         0,        -1 },
-	{ TERMCLASS,  NULL,       NULL,       	    0,            0,           1,         0,        -1 },
-	{ NULL,       NULL,       "Event Tester",   0,            0,           0,         1,        -1 },
-	{ TERMCLASS,      "floatterm", NULL,       	    0,       1,           1,         0,        -1 },
-	{ TERMCLASS,      "bg",        NULL,       	    1 << 7,       0,           1,         0,        -1 },
-	{ TERMCLASS,      "spterm",    NULL,       	    SPTAG(0),     1,           1,         0,        -1 },
-	{ TERMCLASS,      "spcalc",    NULL,       	    SPTAG(1),     1,           1,         0,        -1 },
+	/* class    instance           title       	 tags mask    isfloating   isterminal  noswallow  monitor */
+	{ "Gimp",     NULL,            NULL,       	    1 << 8,       0,           0,         0,        -1 },
+	{ TERMCLASS,  NULL,            NULL,       	    0,            0,           1,         0,        -1 },
+	{ NULL,       NULL,            "Event Tester",  0,            0,           0,         1,        -1 },
+	{ TERMCLASS,  "floatterm",     NULL,       	    0,            1,           1,         0,        -1 },
+	{ TERMCLASS,  "bg",            NULL,       	    1 << 7,       0,           1,         0,        -1 },
+	{ TERMCLASS,  "spterm",        NULL,       	    SPTAG(0),     1,           1,         0,        -1 },
+	{ TERMCLASS,  "spcalc",        NULL,       	    SPTAG(1),     1,           1,         0,        -1 },
 };
 
 /* layout(s) */
@@ -73,10 +73,10 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 #include "vanitygaps.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
+	{ "[@]",	spiral },		/* Fibonacci spiral */
 	{ "[]=",	tile },			/* Default: Master on left, slaves on right */
 	{ "TTT",	bstack },		/* Master on top, slaves on bottom */
 
-	{ "[@]",	spiral },		/* Fibonacci spiral */
 	{ "[\\]",	dwindle },		/* Decreasing in size right and leftward */
 
 	{ "[D]",	deck },			/* Master on left, slaves in monocle-like mode on right */
@@ -97,8 +97,8 @@ static const Layout layouts[] = {
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 #define STACKKEYS(MOD,ACTION) \
-	{ MOD,	XK_h,	ACTION##stack,	{.i = INC(+1) } }, \
-	{ MOD,	XK_l,	ACTION##stack,	{.i = INC(-1) } }, \
+	{ MOD,	XK_l,	ACTION##stack,	{.i = INC(+1) } }, \
+	{ MOD,	XK_h,	ACTION##stack,	{.i = INC(-1) } }, \
 	{ MOD,  XK_v,   ACTION##stack,  {.i = 0 } }, \
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
@@ -151,7 +151,7 @@ static const Key keys[] = {
 	TAGKEYS(XK_8,7)
 	TAGKEYS(XK_9,8)
 	{ MODKEY, XK_0,view,{.ui = ~0 } },
-	{ MODKEY|ShiftMask,XK_0,tag,{.ui = ~0 } },
+	/* { MODKEY|ShiftMask,XK_0,tag,{.ui = ~0 } }, */
 	{ MODKEY,XK_Tab,view,{0} },
 	{ MODKEY,XK_grave,shiftview,	{ .i = +1 } },
 	{ MODKEY,XK_q,killclient,	{0} },
@@ -159,11 +159,11 @@ static const Key keys[] = {
 
 
 	{ MODKEY,XK_c,spawn,{.v = (const char*[]){ BROWSER, NULL } } },
-	{ MODKEY,XK_e,spawn,SHCMD(TERMINAL " -e neomutt ") },
-	{ MODKEY,XK_E,spawn,SHCMD(TERMINAL " -e abook -C ~/.config/abook/abookrc --datafile ~/.config/abook/addressbook") },
-	{ MODKEY,XK_t,setlayout,{.v = &layouts[0]} }, /* tile */
-	// { MODKEY,XK_T,setlayout,{.v = &layouts[1]} }, /* bstack */
-	// { MODKEY,XK_y,setlayout,	{.v = &layouts[2]} }, /* spiral */
+	/* { MODKEY,XK_e,spawn,SHCMD(TERMINAL " -e neomutt ") }, */
+	/* { MODKEY,XK_E,spawn,SHCMD(TERMINAL " -e abook -C ~/.config/abook/abookrc --datafile ~/.config/abook/addressbook") }, */
+	/* { MODKEY,XK_t,setlayout,{.v = &layouts[0]} }, /1* tile *1/ */
+	/* { MODKEY,XK_T,setlayout,{.v = &layouts[1]} }, /1* bstack *1/ */ 
+	/* { MODKEY,XK_y,setlayout,	{.v = &layouts[2]} }, /1* spiral *1/ */
 	// { MODKEY,XK_Y,setlayout,	{.v = &layouts[3]} }, /* dwindle */
 	// { MODKEY,XK_u,setlayout,{.v = &layouts[4]} }, /* deck */
 	// { MODKEY,XK_U,setlayout,{.v = &layouts[5]} }, /* monocle */
@@ -174,32 +174,33 @@ static const Key keys[] = {
 	{ MODKEY,XK_f,togglefullscr,{0} },
 	{ MODKEY,XK_Return,	spawn,{.v = termcmd } },
 	{ MODKEY,XK_b,togglebar,{0} },
-	{ MODKEY,XK_n,spawn,{.v = (const char*[]){ TERMINAL, "-e", "nvim", NULL } } },
-	{ MODKEY,XK_N,spawn,SHCMD(TERMINAL " -e newsboat ") },
+	/* { MODKEY,XK_n,spawn,{.v = (const char*[]){ TERMINAL, "-e", "nvim", NULL } } }, */
+	/* { MODKEY,XK_N,spawn,SHCMD(TERMINAL " -e newsboat ") }, */
 
 
 	{ MODKEY,XK_F1,spawn,{.v = mutevol }},
 	{ MODKEY,XK_F2,spawn,{.v = downvol }},
 	{ MODKEY,XK_F3,spawn,{.v = upvol   }},
-	{ MODKEY,XK_F4,spawn,},
+	/* { MODKEY,XK_F4,spawn,}, */
 	{ MODKEY,XK_F5, xrdb, {.v = NULL } },
-	{ MODKEY,XK_F6,spawn,{.v = (const char*[]){ "torwrap", NULL } } },
-	{ MODKEY,XK_F7,spawn,{.v = (const char*[]){ "td-toggle", NULL } } },
-	{ MODKEY,XK_F8,spawn,{.v = (const char*[]){ "mailsync", NULL } } },
-	{ MODKEY,XK_F9,spawn,{.v = (const char*[]){ "mounter", NULL } } },
-	{ MODKEY,XK_F10,spawn,{.v = (const char*[]){ "unmounter", NULL } } },
-	{ MODKEY,XK_F11,spawn,SHCMD("mpv --untimed --no-cache --no-osc --no-input-default-bindings --profile=low-latency --input-conf=/dev/null --title=webcam $(ls /dev/video[0,2,4,6,8] | tail -n 1)") },
-	{ MODKEY,XK_F12,		spawn,		SHCMD("remaps") },
+	/* { MODKEY,XK_F6,spawn,{.v =  (const char*[]){ "torwrap", NULL } } }, */
+	/* { MODKEY,XK_F7,spawn,{.v =  (const char*[]){ "td-toggle", NULL } } }, */
+	/* { MODKEY,XK_F8,spawn,{.v =  (const char*[]){ "mailsync", NULL } } }, */
+	/* { MODKEY,XK_F9,spawn,{.v =  (const char*[]){ "mounter", NULL } } }, */
+	/* { MODKEY,XK_F10,spawn,{.v = (const char*[]){ "unmounter", NULL } } }, */
+	/* { MODKEY,XK_F11,spawn,SHCMD("mpv --untimed --no-cache --no-osc --no-input-default-bindings --profile=low-latency --input-conf=/dev/null --title=webcam $(ls /dev/video[0,2,4,6,8] | tail -n 1)") }, */
+	/* { MODKEY,XK_F12,		spawn,		SHCMD("remaps") }, */
 
 
-	{ MODKEY,XK_Left,setmfact,{.f = -0.05} },
+	{ MODKEY,XK_Left,setmfact, {.f = -0.05} },
 	{ MODKEY,XK_Right,setmfact,{.f = +0.05} },
 	{ MODKEY,XK_BackSpace,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "htop", NULL } } },
 	{ MODKEY,XK_space,	zoom,		{0} },
-	// { MODKEY|ShiftMask,		XK_space,	togglefloating,	{0} },
-	{ 0,XK_Print,	spawn,		SHCMD("maim -s ~/Pictures/$(date +%s).png") },
+	{ MODKEY|ShiftMask,		XK_space,	togglefloating,	{0} },
 	{ MODKEY,XK_Print,	spawn,		SHCMD( "maim -s | xclip -selection clipboard -t image/png") },
 	{ MODKEY,XK_Scroll_Lock,	spawn,		SHCMD("killall screenkey || screenkey &") },
+
+	{ 0,XK_Print,	spawn,		SHCMD("maim -s ~/Pictures/$(date +%s).png") },
 };
 
 /* button definitions */
@@ -210,13 +211,13 @@ static const Button buttons[] = {
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        defaultgaps,    {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
-	{ ClkClientWin,		MODKEY,		Button4,	incrgaps,	{.i = +1} },
-	{ ClkClientWin,		MODKEY,		Button5,	incrgaps,	{.i = -1} },
+	{ ClkClientWin,      		MODKEY,		      Button4,	      incrgaps,	{.i = +1} },
+	{ ClkClientWin,      		MODKEY,		      Button5,	      incrgaps,	{.i = -1} },
 	{ ClkTagBar,            0,              Button1,        view,           {0} },
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
-	{ ClkTagBar,		0,		Button4,	shiftview,	{.i = -1} },
-	{ ClkTagBar,		0,		Button5,	shiftview,	{.i = 1} },
-	{ ClkRootWin,		0,		Button2,	togglebar,	{0} },
+	{ ClkTagBar,		        0,		          Button4,	      shiftview,{.i = -1} },
+	{ ClkTagBar,		        0,		          Button5,	      shiftview, {.i = 1} },
+	{ ClkRootWin,		        0,		          Button2,	      togglebar,      {0} },
 };
