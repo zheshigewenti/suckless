@@ -73,10 +73,11 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 #include "vanitygaps.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[@]",	spiral },		/* Fibonacci spiral */
 	{ "[]=",	tile },			/* Default: Master on left, slaves on right */
 	{ "TTT",	bstack },		/* Master on top, slaves on bottom */
 
+
+	{ "[@]",	spiral },		/* Fibonacci spiral */
 	{ "[\\]",	dwindle },		/* Decreasing in size right and leftward */
 
 	{ "[D]",	deck },			/* Master on left, slaves in monocle-like mode on right */
@@ -97,8 +98,8 @@ static const Layout layouts[] = {
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 #define STACKKEYS(MOD,ACTION) \
-	{ MOD,	XK_l,	ACTION##stack,	{.i = INC(+1) } }, \
-	{ MOD,	XK_h,	ACTION##stack,	{.i = INC(-1) } }, \
+	{ MOD,	XK_h,	ACTION##stack,	{.i = INC(+1) } }, \
+	{ MOD,	XK_l,	ACTION##stack,	{.i = INC(-1) } }, \
 	{ MOD,  XK_v,   ACTION##stack,  {.i = 0 } }, \
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
