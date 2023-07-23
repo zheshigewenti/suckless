@@ -189,7 +189,7 @@ static const Key keys[] = {
 	/* { MODKEY,XK_F8,spawn,{.v =  (const char*[]){ "mailsync", NULL } } }, */
 	/* { MODKEY,XK_F9,spawn,{.v =  (const char*[]){ "mounter", NULL } } }, */
 	/* { MODKEY,XK_F10,spawn,{.v = (const char*[]){ "unmounter", NULL } } }, */
-	/* { MODKEY,XK_F11,spawn,SHCMD("mpv --untimed --no-cache --no-osc --no-input-default-bindings --profile=low-latency --input-conf=/dev/null --title=webcam $(ls /dev/video[0,2,4,6,8] | tail -n 1)") }, */
+	{ MODKEY,XK_F11,spawn,SHCMD("mpv --untimed --no-cache --no-osc --no-input-default-bindings --profile=low-latency --input-conf=/dev/null --title=webcam $(ls /dev/video[0,2,4,6,8] | tail -n 1)") },
 	/* { MODKEY,XK_F12,		spawn,		SHCMD("remaps") }, */
 
 
@@ -198,10 +198,11 @@ static const Key keys[] = {
 	{ MODKEY,XK_BackSpace,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "htop", NULL } } },
 	{ MODKEY,XK_space,	zoom,		{0} },
 	{ MODKEY|ShiftMask,		XK_space,	togglefloating,	{0} },
-	{ MODKEY,XK_Print,	spawn,		SHCMD( "maim -s | xclip -selection clipboard -t image/png") },
 	{ MODKEY,XK_Scroll_Lock,	spawn,		SHCMD("killall screenkey || screenkey &") },
 
-	{ 0,XK_Print,	spawn,		SHCMD("maim -s ~/Pictures/$(date +%s).png") },
+	{ 0,     XK_Print,	spawn,		SHCMD( "maim -s | tee ~/Pictures/$(date +%s).png | xclip -selection clipboard -t image/png") },
+
+
 };
 
 /* button definitions */
