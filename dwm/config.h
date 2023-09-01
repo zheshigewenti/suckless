@@ -183,7 +183,7 @@ static const Key keys[] = {
 	{ 0,XK_F2,spawn,{.v = downvol }},
 	{ 0,XK_F3,spawn,{.v = upvol   }},
 	/* { MODKEY,XK_F4,spawn,}, */
-	{ MODKEY,XK_F5, xrdb, {.v = NULL } },
+	/* { MODKEY,XK_F5, xrdb, {.v = NULL } }, */
 	/* { MODKEY,XK_F6,spawn,{.v =  (const char*[]){ "torwrap", NULL } } }, */
 	/* { MODKEY,XK_F7,spawn,{.v =  (const char*[]){ "td-toggle", NULL } } }, */
 	/* { MODKEY,XK_F8,spawn,{.v =  (const char*[]){ "mailsync", NULL } } }, */
@@ -209,7 +209,7 @@ static const Key keys[] = {
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static const Button buttons[] = {
 	/* click                event mask      button          function        argument */
-	{ ClkStatusText,        0,              Button1,        spawn,          SHCMD(TERMINAL     " -e alsamixer") },
+	/* { ClkStatusText,        0,              Button1,        spawn,          SHCMD(TERMINAL     " -e alsamixer") }, */
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        defaultgaps,    {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
