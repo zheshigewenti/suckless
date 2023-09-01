@@ -179,9 +179,9 @@ static const Key keys[] = {
 	/* { MODKEY,XK_N,spawn,SHCMD(TERMINAL " -e newsboat ") }, */
 
 
-	{ MODKEY,XK_F1,spawn,{.v = mutevol }},
-	{ MODKEY,XK_F2,spawn,{.v = downvol }},
-	{ MODKEY,XK_F3,spawn,{.v = upvol   }},
+	{ 0,XK_F1,spawn,{.v = mutevol }},
+	{ 0,XK_F2,spawn,{.v = downvol }},
+	{ 0,XK_F3,spawn,{.v = upvol   }},
 	/* { MODKEY,XK_F4,spawn,}, */
 	{ MODKEY,XK_F5, xrdb, {.v = NULL } },
 	/* { MODKEY,XK_F6,spawn,{.v =  (const char*[]){ "torwrap", NULL } } }, */
